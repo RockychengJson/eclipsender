@@ -1,5 +1,7 @@
+/**
+ * Comment added for TeamCity test
+ */
 package org.easy4.tools.eclipsender.plugin.views;
-
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.*;
