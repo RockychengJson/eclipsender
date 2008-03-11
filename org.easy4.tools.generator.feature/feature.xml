@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.easy4.tools.generator"
+      label="Generator Feature"
+      version="1.0.0"
+      provider-name="Simon">
+
+   <description url="http://easy4.org/generator.aspx">
+      Data Access Bean Generator
+   </description>
+
+   <copyright url="http://easy4.org/copyright.aspx">
+      Copyright 2007 Easy4.org
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      Free Free Free Free
+ Free Free Free Free
+ Free
+ Free
+ Free
+ Free
+ Free Free Free Free
+ Free Free Free Free
+ Free
+ Free
+ Free
+ Free
+ Free
+ Free
+ Free
+   </license>
+
+   <url>
+      <discovery label="Easy4.org" url="http://easy4.org"/>
+   </url>
+
+   <plugin
+         id="org.easy4.tools.beangenerator.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
