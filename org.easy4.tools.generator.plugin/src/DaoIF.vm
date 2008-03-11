@@ -1,0 +1,51 @@
+package ${package_name};
+
+import jp.co.intra_mart.framework.base.data.DataAccessException;
+import jp.co.intra_mart.framework.base.data.DataConnectException;
+import jp.co.intra_mart.framework.base.data.DataPropertyException;
+
+/**
+ * DAO class of ${class_description}
+ */
+public interface ${class_name} {
+
+	/**
+	 * Select
+	 * 
+	 * @return Insert Record Count
+	 * @throws DataConnectException
+	 * @throws DataAccessException
+	 * @throws DataPropertyException
+	 */
+	public ${module_name} select(${primary_key_parameters}) throws DataConnectException, DataAccessException, DataPropertyException;
+	
+	/**
+	 * Insert
+	 * 
+	 * @return Insert Record Count
+	 * @throws DataConnectException
+	 * @throws DataAccessException
+	 * @throws DataPropertyException
+	 */
+	public int insert(${module_name} bean) throws DataConnectException, DataAccessException, DataPropertyException;
+	
+	/**
+	 * Update
+	 * 
+	 * @return Update Record Count
+	 * @throws DataConnectException
+	 * @throws DataAccessException
+	 * @throws DataPropertyException
+	 */
+	public int update(${module_name} bean) throws DataConnectException, DataAccessException, DataPropertyException;
+	
+	/**
+	 * Delete
+	 * 
+	 * @return Update Record Count
+	 * @throws DataConnectException
+	 * @throws DataAccessException
+	 * @throws DataPropertyException
+	 */
+	public int delete(${module_name} bean) throws DataConnectException, DataAccessException, DataPropertyException;
+}
