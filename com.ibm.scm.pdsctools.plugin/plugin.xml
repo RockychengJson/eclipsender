@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="PDSCTools"
+            id="com.ibm.scm.pdsctools.wizards">
+      </category>
+      <wizard
+            name="PDSC Operation configuration file"
+            icon="icons/sample.gif"
+            category="com.ibm.scm.pdsctools.wizards"
+            class="com.ibm.scm.pdsctools.wizards.PDSCWizard"
+            id="com.ibm.scm.pdsctools.wizards.PDSCWizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.ibm.scm.pdsctools.preferences.PreferencePage"
+            id="com.ibm.scm.pdsctools.preferences.PreferencePage"
+            name="PDSCTool Preferences"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="com.ibm.scm.pdsctools.preferences.PreferenceInitializer"/>
+   </extension>
+
+</plugin>
