@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bean Generator
+Bundle-SymbolicName: org.easy4.tools.beangenerator.plugin; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.easy4.tools.generator.Activator
+Bundle-Vendor: Easy4.org
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.jdt.core
+Eclipse-LazyStart: true
+Bundle-ClassPath: commons-beanutils.jar,
+ commons-collections-3.2.jar,
+ commons-lang-2.3.jar,
+ commons-logging-1.0.4.jar,
+ jakarta-oro-2.0.8.jar,
+ velocity-1.5.jar,
+ .

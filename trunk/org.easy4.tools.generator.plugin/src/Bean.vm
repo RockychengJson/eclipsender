@@ -1,0 +1,29 @@
+package ${package_name};
+
+/**
+ * Bean class of ${class_description}
+ */
+public class ${class_name} {
+
+#foreach( $field in ${table.fields} )
+	/**
+	 * ${field.description}
+	 */
+	private ${field.type} ${field.getNameWithFirstLower()};
+	
+	/**
+	 * @param ${field.getNameWithFirstLower()} the ${field.description} to set
+	 */
+	public void set${field.getNameWithFirstUpper()}(${field.type} ${field.getNameWithFirstLower()}) {
+		this.${field.getNameWithFirstLower()} = ${field.getNameWithFirstLower()};
+	}
+	
+	/**
+	 * @return the ${field.description}
+	 */
+	public ${field.type} get${field.getNameWithFirstUpper()}() {
+		return ${field.getNameWithFirstLower()};
+	}
+	
+#end
+}
