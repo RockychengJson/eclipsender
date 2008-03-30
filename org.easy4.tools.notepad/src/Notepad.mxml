@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="0" paddingTop="0" paddingLeft="1" paddingRight="1" creationComplete="feed.send()">
+
+	<mx:HTTPService id="feed" url="http://localhost/feeds/news.rss" />
+
+	<mx:DataGrid id="news" width="100%" height="40%" dataProvider="{feed.lastResult.rss.channel.item}">
+		<mx:columns>
+			<mx:DataGridColumn dataField="id" width="60" headerText="ID" />
+			<mx:DataGridColumn dataField="title" headerText="Title" />
+			<mx:DataGridColumn dataField="pubDate" headerText="Date" width="150" />
+		</mx:columns>
+	</mx:DataGrid>
+
+	<mx:HTML width="100%" height="60%" location="{news.selectedItem.link}" />
+
+</mx:WindowedApplication>
