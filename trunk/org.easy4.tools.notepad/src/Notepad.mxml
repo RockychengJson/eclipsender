@@ -1,17 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="0" paddingTop="0" paddingLeft="1" paddingRight="1" creationComplete="feed.send()">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+	paddingBottom="0" paddingTop="0" paddingLeft="0" paddingRight="0" backgroundColor="#FFFFFF"
+	creationComplete="initApp()">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.Canvas;
+			import mx.controls.Alert;
+			import mx.collections.ArrayCollection;
+			
+			private function initApp():void {
+            	ceritia.addEventListener(KeyboardEvent.KEY_UP, setCeritia);
+            	feed.send()
+        	}
+			
+			private function rte_onkeyup(rte:RichTextEditor):void {
+				var title_length:Number = 50;
+				var text:String = rte.text;
+				if (text.length > title_length) {
+					rte.title = text.substr(0, title_length) + " ... ";
+				} else {
+					rte.title = text;
+				}
+			}
+			
+			private function alert(message:String):void {
+				Alert.show(message, 'Alert Box', mx.controls.Alert.OK);
+			}
+			
+			private function build(list:Array):void {
+				for(var i:Number = 0; i<list.length; i++){
+					var item:Canvas = new Canvas();
+					item.label = list[i].title;
+					content.addChild(item);
+				}
+			}
+			
+			[Bindable]
+            public var ceritias:ArrayCollection = new ArrayCollection();
+			
+			private function setCeritia(event:KeyboardEvent):void {
+				if (ceritia.text == "") {
+					return;
+				}
+				if (event.keyCode == 13) {
+					var item:Object = {label:ceritia.text, data:ceritia.text};
+					var exist:Boolean = false;
+					for(var i:Number = 0; i<ceritias.length; i++){
+						if (ceritias[i].data == item.data) {
+							exist = true;
+							break;
+						}
+					}
+					if (!exist) {
+						ceritias.addItem(item);
+						//ceritias.refresh();
+					}
+				}
+			}
+			
+		]]>
+	</mx:Script>
 
 	<mx:HTTPService id="feed" url="http://localhost/feeds/news.rss" />
-
-	<mx:DataGrid id="news" width="100%" height="40%" dataProvider="{feed.lastResult.rss.channel.item}">
-		<mx:columns>
-			<mx:DataGridColumn dataField="id" width="60" headerText="ID" />
-			<mx:DataGridColumn dataField="title" headerText="Title" />
-			<mx:DataGridColumn dataField="pubDate" headerText="Date" width="150" />
-		</mx:columns>
-	</mx:DataGrid>
-
-	<mx:HTML width="100%" height="60%" location="{news.selectedItem.link}" />
+	
+	<mx:VBox width="100%" paddingBottom="0" paddingTop="10" paddingLeft="10" paddingRight="10">
+		<mx:ComboBox id="ceritia" width="100%" editable="true" dataProvider="{ceritias}" />
+	</mx:VBox>
+	
+	<mx:VBox height="100%" width="100%" paddingBottom="10" paddingTop="0" paddingLeft="10" paddingRight="10">
+		<mx:Accordion id="content" width="100%" height="100%">
+			<mx:Canvas label="Create a new note ..." width="100%" height="100%">
+				<mx:RichTextEditor id="newItem" title="No name" width="100%" height="100%" change="{rte_onkeyup(newItem)}">
+				</mx:RichTextEditor>
+			</mx:Canvas>
+			<mx:Canvas label="kaiekei" width="100%" height="100%">
+				<mx:RichTextEditor id="viewItem" title="No name" width="100%" height="100%" enabled="true" doubleClick="viewItem.enabled=false;" />
+			</mx:Canvas>
+		</mx:Accordion>
+	</mx:VBox>
 
 </mx:WindowedApplication>
