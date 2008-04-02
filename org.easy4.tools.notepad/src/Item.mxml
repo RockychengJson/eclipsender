@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="50" creationComplete="{init()}">
+
+	<mx:Script>
+		<![CDATA[
+		
+			private var _href:String = "http://www.baidu.com";
+			
+			public function set href(value:String):void {
+				_href = value;
+			}
+			public function get href():String {
+				return _href;;
+			}
+			
+			private var _linkText:String = "Baidu";
+			
+			public function set linkText(value:String):void {
+				_linkText = value;
+				plink.label = value;
+			}
+			
+			public function get linkText():String {
+				return _linkText;
+			}
+			
+			private  var _title:String = "Search in Baidu.";
+			
+			public function set title(value:String):void {
+				_title = value;
+				//ptitle.text = value;
+			}
+			
+			public function get title():String {
+				return _title;
+			}
+			
+			private  var _date:Date = new Date();
+			
+			public function set date(value:Date):void {
+				_date = value;
+				pdate.text = value.toLocaleDateString();
+			}
+			
+			public function get date():Date {
+				return _date;
+			}
+			
+			private function navigate():void {
+				navigateToURL(new URLRequest(_href));
+			}
+			
+			private function init():void {
+				plink.label = _href;
+				ptitle.text = _title;
+				pdate.text = _date.toLocaleDateString();
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Box direction="horizontal"  
+        borderStyle="solid" 
+        paddingTop="2" 
+        paddingBottom="2" 
+        paddingLeft="2" 
+        paddingRight="2" 
+        width="100%" height="100%">
+        
+		<mx:HBox width="30%" height="100%" horizontalAlign="center" verticalAlign="middle">
+			<mx:LinkButton id="plink" label="LinkButton" click="{navigate()}" />
+		</mx:HBox>
+		
+		<mx:HBox width="40%" height="100%" verticalAlign="middle">
+			<mx:Label id="ptitle" text="Label" />
+		</mx:HBox>
+		
+		<mx:HBox width="30%" height="100%" verticalAlign="middle" horizontalAlign="center">
+			<mx:Label id="pdate" text="Label" />
+		</mx:HBox>
+
+    </mx:Box>
+	
+</mx:Canvas>
