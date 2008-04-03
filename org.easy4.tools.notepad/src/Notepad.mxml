@@ -2,7 +2,7 @@
 
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
 	paddingBottom="0" paddingTop="0" paddingLeft="0" paddingRight="0" backgroundColor="#FFFFFF"
-	creationComplete="initApp()" xmlns:e4="*">
+	creationComplete="initApp()" xmlns:e4="controls.*">
 
 	<mx:Script>
 		<![CDATA[
