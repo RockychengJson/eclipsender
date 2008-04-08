@@ -2,10 +2,17 @@
 
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
 	paddingBottom="0" paddingTop="0" paddingLeft="0" paddingRight="0" backgroundColor="#FFFFFF"
-	creationComplete="initApp()" xmlns:e4="controls.*">
+	creationComplete="initApp()">
 
 	<mx:Script>
 		<![CDATA[
+			import flash.filesystem.File;
+			import flash.filesystem.FileMode;
+			import flash.filesystem.FileStream;
+			import flash.data.SQLConnection;
+			import mx.controls.listClasses.IListItemRenderer;
+			import controls.ItemRenderer;
+			import mx.events.ListEvent;
 			import mx.controls.Label;
 			import mx.controls.Text;
 			import mx.controls.TextArea;
@@ -16,7 +23,11 @@
 			
 			private function initApp():void {
             	ceritia.addEventListener(KeyboardEvent.KEY_UP, setCeritia);
-            	//feed.send();
+            	feed.send();
+            	var file:File = new File("C:\\SystemErr.log");
+            	var stream:FileStream = new FileStream();
+            	stream.open(file, FileMode.READ);
+            	editor.text = stream.readUTF();
         	}
 			
 			private function rte_onkeyup(rte:RichTextEditor):void {
@@ -48,7 +59,7 @@
 					var title:String = result[i].title;
 					var text:String = result[i].description;
 					var date:String = result[i].pubDate;
-					dataList.addItem(title);
+					dataList.addItem({title: title,text: text, date: date});
 				}
 				
 			}
@@ -75,8 +86,15 @@
 				}
 			}
 			
-			private function viewDetail():void {
-				
+	        private function itemClickEvent(event:ListEvent):void {
+	            var item:IListItemRenderer = details.itemToItemRenderer(details.selectedItem);
+				item.explicitHeight = 100;
+				details.rowHeight = 100;
+	        }
+
+			private function itemFocusInEvent(event:ListEvent):void {
+				var item:IListItemRenderer = details.itemToItemRenderer(details.selectedItem);
+				item.height += 100;
 			}
 			
 		]]>
@@ -88,28 +106,25 @@
 		<mx:ComboBox id="ceritia" width="100%" editable="true" dataProvider="{ceritias}" />
 	</mx:VBox>
 	
-	<mx:VBox height="100%" width="100%" paddingBottom="10" paddingTop="0" paddingLeft="10" paddingRight="10">
-		<mx:RichTextEditor id="editor" title="No name" width="100%" height="300" change="{rte_onkeyup(editor)}" />
-		<mx:Grid width="100%">
-			<mx:GridRow width="100%" height="100%">
-				<mx:GridItem width="100%" height="100%">
-					<e4:Item width="100%">
-					</e4:Item>
-				</mx:GridItem>
-			</mx:GridRow>
-			<mx:GridRow width="100%" height="100%">
-				<mx:GridItem width="100%" height="100%">
-					<e4:Item width="100%">
-					</e4:Item>
-				</mx:GridItem>
-			</mx:GridRow>
-			<mx:GridRow width="100%" height="100%">
-				<mx:GridItem width="100%" height="100%">
-					<e4:Item width="100%">
-					</e4:Item>
-				</mx:GridItem>
-			</mx:GridRow>
-		</mx:Grid>
+	<mx:VBox height="100%" width="100%" 
+		paddingBottom="10" paddingTop="0" 
+		paddingLeft="10" paddingRight="10">
+		
+		<mx:RichTextEditor id="editor" width="100%" height="50%"
+			title="No name"
+			change="{rte_onkeyup(editor)}" />
+			
+		<mx:VBox width="100%" height="50%" maxHeight="300">
+			<mx:List id="details" width="100%" height="100%" 
+			dataProvider="{dataList}"
+			itemRenderer="controls.ItemRenderer"
+			borderStyle="outset"
+			itemFocusIn="itemFocusInEvent(event)"
+			/>
+		</mx:VBox>
+			
+		
+			
 	</mx:VBox>
 
 </mx:WindowedApplication>
