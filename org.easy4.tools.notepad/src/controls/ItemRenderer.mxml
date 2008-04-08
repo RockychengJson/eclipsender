@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%">
+
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			public var _data:Object = {
+				title: "",
+				date: new Date(),
+				text: ""
+			};
+			
+			private function showDetail():void {
+				if (detail.height == 0) {
+					detail.height += 100;
+					this.height += 100;
+				} else {
+					detail.height = 0;
+					this.height -= 100;
+				}
+			}
+		]]>
+	</mx:Script>
 	
 	<mx:DateFormatter id="dateFormatter" formatString="YYYY/MM/DD HH:NN" />
 	
 	<mx:HBox width="100%" >
-		<mx:LinkButton id="lnkBtton" label="{data.title}" />
+		<mx:LinkButton id="lnkBtton" label="{_data.title}" click="{showDetail()}" />
 	    <mx:Spacer width="100%" />
-	    <mx:Label text="{dateFormatter.format(data.date)}" />
+	    <mx:Label text="{dateFormatter.format(_data.date)}" />
 	</mx:HBox>
+	
+	<mx:TextArea id="detail" width="100%" height="0" editable="false" text="{_data.text}" />
     
 </mx:VBox> 
 
