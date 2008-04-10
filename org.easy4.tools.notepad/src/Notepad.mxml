@@ -2,13 +2,16 @@
 
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
 	paddingBottom="0" paddingTop="0" paddingLeft="0" paddingRight="0" backgroundColor="#FFFFFF"
-	creationComplete="initApp()" xmlns:ns1="controls.*">
+	creationComplete="initApp()" xmlns:ns1="controls.*" layout="vertical">
+	
+	<mx:Style>
+		ItemRenderer {
+			cursor: hand;
+		}
+	</mx:Style>
 
 	<mx:Script>
 		<![CDATA[
-			import flash.filesystem.File;
-			import flash.filesystem.FileMode;
-			import flash.filesystem.FileStream;
 			import flash.data.SQLConnection;
 			import mx.controls.listClasses.IListItemRenderer;
 			import controls.ItemRenderer;
@@ -24,24 +27,18 @@
 			private function initApp():void {
             	ceritia.addEventListener(KeyboardEvent.KEY_UP, setCeritia);
             	feed.send();
-            	var file:File = new File("C:\\SystemErr.log");
-            	var stream:FileStream = new FileStream();
-            	stream.open(file, FileMode.READ);
-            	editor.text = stream.readUTF();
+            	mainPanel.title = "Loading...";
+            	details.height = mainPanel.height - 40;
+            	this.statusBar.visible = false;
+        	}
+        	
+        	private function mainPanel_OnResize():void {
+        		//details.width = mainPanel.width - 10;
+        		details.height = mainPanel.height - 40;
         	}
 			
-			private function rte_onkeyup(rte:RichTextEditor):void {
-				var title_length:Number = 50;
-				var text:String = rte.text;
-				if (text.length > title_length) {
-					rte.title = text.substr(0, title_length) + " ... ";
-				} else {
-					rte.title = text;
-				}
-			}
-			
-			private function alert(message:String):void {
-				Alert.show(message, 'Alert Box', mx.controls.Alert.OK);
+			private function alert(title:String, message:String):void {
+				Alert.show(message, title, mx.controls.Alert.OK);
 			}
 			
 			public var displayCount:Number = 10;
@@ -55,16 +52,34 @@
 				
 				var result:ArrayCollection = feed.lastResult.rss.channel.item;
 				
-				for(var i:Number = 0; i<result.length; i++) {
+				for(var i:Number = 0; i<15; i++) {
 					var title:String = result[i].title;
 					var text:String = result[i].description;
 					var date:String = result[i].pubDate;
 					dataList.addItem({title: title,text: text, date: date});
 					var item:ItemRenderer = new ItemRenderer();
 					item._data = {title: title,text: text, date: date};
+					item.addEventListener(MouseEvent.CLICK, item_OnClick);
 					details.addChild(item);
 				}
 				
+				mainPanel.title = "";
+				
+			}
+			
+			private var lastShownItem:ItemRenderer;
+			
+			private function item_OnClick(event:MouseEvent):void {
+				var item:ItemRenderer = ItemRenderer (event.currentTarget);
+				if (lastShownItem == item) {
+					return;
+				}
+				item.showDetail(true);
+				mainPanel.title = item._data.title;
+				if (lastShownItem != null) {
+					lastShownItem.showDetail(false);
+				}
+				lastShownItem = item;
 			}
 			
 			[Bindable]
@@ -94,23 +109,36 @@
 
 	<mx:HTTPService id="feed" url="http://localhost/feeds/news.rss" result="makeDataList()" />
 	
-	<mx:VBox width="100%" paddingBottom="0" paddingTop="10" paddingLeft="10" paddingRight="10">
+	<mx:HBox width="100%" height="40" verticalAlign="middle" paddingLeft="10" paddingRight="20">
+		<mx:Image width="120" height="26" source="@Embed(source='images/notebook.gif')" />
 		<mx:ComboBox id="ceritia" width="100%" editable="true" dataProvider="{ceritias}" />
-	</mx:VBox>
+		<mx:Button id="btnSearch" label="Search" icon="@Embed(source='icons/icon-new.gif')" />
+		<mx:Button id="btnAddNew" label="Add" icon="@Embed(source='icons/icon-new.gif')" />
+		<mx:Button id="btnDelete" label="Delete" icon="@Embed(source='icons/icon-delete.gif')" />
+	</mx:HBox>
 	
-	<mx:VBox height="100%" width="100%" 
-		paddingBottom="10" paddingTop="0" 
-		paddingLeft="10" paddingRight="10">
-		
-		<mx:RichTextEditor id="editor" width="100%" height="50%"
-			title="No name"
-			change="{rte_onkeyup(editor)}" />
-			
-		<mx:VBox id="details" width="100%" height="300" maxHeight="300"
-			paddingBottom="0" paddingTop="0" 
-			paddingLeft="10" paddingRight="10">
-		</mx:VBox>
-			
-	</mx:VBox>
-
+	<mx:HDividedBox width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingBottom="5">
+	
+		<mx:Canvas label="Left Panel" width="20%" height="100%">
+			<mx:VBox width="100%" height="100%">
+				<mx:Panel width="100%" height="200" layout="vertical" title="Books" borderColor="#99CCFF">
+				</mx:Panel>
+				<mx:Panel width="100%" height="100%" layout="vertical" title="Tags" borderColor="#B5EDBC">
+				</mx:Panel>
+				<mx:Panel width="100%" height="100%" layout="vertical" title="Trash" borderColor="#6093C6">
+				</mx:Panel>
+			</mx:VBox>
+        </mx:Canvas>
+        
+        <mx:Canvas label="Right Panel" width="80%" height="100%">
+        	<mx:Panel id="mainPanel" width="100%" height="100%" 
+        		layout="vertical" 
+        		backgroundColor="#FAFBFC" borderColor="#99CCFF"
+        		resize="mainPanel_OnResize()">
+        		<mx:VBox id="details" width="100%" verticalGap="0"></mx:VBox>
+        	</mx:Panel>
+        </mx:Canvas>
+        
+	</mx:HDividedBox>
+	
 </mx:WindowedApplication>

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%"  
+	paddingLeft="2" 
+	paddingRight="2" 
+	paddingTop="2"  borderStyle="solid" verticalGap="0" borderColor="#F0F0F1"
+	paddingBottom="2" creationComplete="{rte_onkeyup()}">
 
 	<mx:Script>
 		<![CDATA[
@@ -11,13 +16,45 @@
 				text: ""
 			};
 			
-			private function showDetail():void {
-				if (detail.height == 0) {
-					detail.height += 100;
-					this.height += 100;
+			public function showDetail(visible:Boolean):void {
+				if (visible) {
+					ttlbar.height = 0;
+					detail.height += 200;
+					this.height += 180;
 				} else {
+					ttlbar.height = 20;
 					detail.height = 0;
-					this.height -= 100;
+					this.height -= 180;
+					
+				}
+				highlightTitle(visible);
+			}
+			
+			private function highlightTitle(highlight:Boolean):void {
+				if (highlight) {
+					this.setStyle("borderColor", "#394B5A");
+					this.setStyle("borderThickness", "2");
+					lblTitle.setStyle("color", "#F76701");
+					lblDate.setStyle("color", "#F76701");
+				} else {
+					this.setStyle("borderColor", "#F0F0F1");
+					this.setStyle("borderThickness", "1");
+					lblTitle.setStyle("color", "#000000");
+					lblDate.setStyle("color", "#000000");
+				}
+			}
+			
+			public function isDetailVisible():Boolean {
+				return (detail.height == 0);
+			}
+			
+			private function rte_onkeyup():void {
+				var title_length:Number = 50;
+				var text:String = rtebox.text;
+				if (text.length > title_length) {
+					rtebox.title = text.substr(0, title_length) + " ... ";
+				} else {
+					rtebox.title = text;
 				}
 			}
 		]]>
@@ -25,13 +62,14 @@
 	
 	<mx:DateFormatter id="dateFormatter" formatString="YYYY/MM/DD HH:NN" />
 	
-	<mx:HBox width="100%" >
-		<mx:LinkButton id="lnkBtton" label="{_data.title}" click="{showDetail()}" />
-	    <mx:Spacer width="100%" />
-	    <mx:Label text="{dateFormatter.format(_data.date)}" />
+	<mx:HBox id="ttlbar" width="100%" height="20" buttonMode="true" useHandCursor="true" mouseChildren="false" verticalAlign="middle">
+		<mx:Label id="lblTitle" text="{_data.title}" fontWeight="bold"  />
+	    <mx:Label width="100%" text="" />
+	    <mx:Label id="lblDate" text="{dateFormatter.format(_data.date)}" fontWeight="bold" />
 	</mx:HBox>
 	
-	<mx:TextArea id="detail" width="100%" height="0" editable="false" text="{_data.text}" />
-    
+	<mx:HBox id="detail" width="100%" height="0">
+		<mx:RichTextEditor id="rtebox" width="100%" height="100%" htmlText="{_data.text}" keyUp="rte_onkeyup()" />
+    </mx:HBox>
 </mx:VBox> 
 
