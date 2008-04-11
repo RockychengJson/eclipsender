@@ -3,26 +3,26 @@
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
 	paddingBottom="0" paddingTop="0" paddingLeft="0" paddingRight="0" backgroundColor="#FFFFFF"
 	creationComplete="initApp()" xmlns:ns1="controls.*" layout="vertical">
-	
-	<mx:Style>
-		ItemRenderer {
-			cursor: hand;
-		}
-	</mx:Style>
 
 	<mx:Script>
 		<![CDATA[
-			import flash.data.SQLConnection;
-			import mx.controls.listClasses.IListItemRenderer;
 			import controls.ItemRenderer;
-			import mx.events.ListEvent;
+			import controls.NewItemPopup;
+			import mx.containers.Canvas;
+			import mx.collections.ArrayCollection;
+			import mx.controls.listClasses.IListItemRenderer;
 			import mx.controls.Label;
 			import mx.controls.Text;
 			import mx.controls.TextArea;
-		
-			import mx.containers.Canvas;
 			import mx.controls.Alert;
-			import mx.collections.ArrayCollection;
+			import mx.core.UITextField;
+			import mx.core.IFlexDisplayObject;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.CursorManager;
+			
+			[Embed(source='icons/icon-delete.gif')]
+			private var deleteCursorCls:Class;
 			
 			private function initApp():void {
             	ceritia.addEventListener(KeyboardEvent.KEY_UP, setCeritia);
@@ -52,7 +52,7 @@
 				
 				var result:ArrayCollection = feed.lastResult.rss.channel.item;
 				
-				for(var i:Number = 0; i<15; i++) {
+				for(var i:Number = 0; i<19; i++) {
 					var title:String = result[i].title;
 					var text:String = result[i].description;
 					var date:String = result[i].pubDate;
@@ -71,15 +71,59 @@
 			
 			private function item_OnClick(event:MouseEvent):void {
 				var item:ItemRenderer = ItemRenderer (event.currentTarget);
+				
+				if (btnDelete.pushed) {
+					details.removeChild(item);
+					return;
+				}
+				
 				if (lastShownItem == item) {
 					return;
 				}
 				item.showDetail(true);
+				item.setFocus();
 				mainPanel.title = item._data.title;
 				if (lastShownItem != null) {
 					lastShownItem.showDetail(false);
 				}
 				lastShownItem = item;
+			}
+			
+			private function item_OnMove(event:KeyboardEvent):void {
+				if (event.target is UITextField) {
+					return;
+				}
+				
+				if (event.keyCode != Keyboard.UP && event.keyCode != Keyboard.DOWN) {
+					return;
+				}
+				
+				var index:Number = -1;
+				
+				if (lastShownItem != null) {
+					index = details.getChildIndex(lastShownItem);
+				}
+				
+				var nextItem:ItemRenderer = null;
+				
+				var itemCount:Number = details.getChildren().length;
+				
+				if (event.keyCode == Keyboard.UP) {
+					if (index - 1 < 0) {
+						nextItem = ItemRenderer (details.getChildAt(itemCount - 1));
+					} else {
+						nextItem = ItemRenderer (details.getChildAt(index - 1));
+					}
+				} else if (event.keyCode == Keyboard.DOWN) {
+					if (index + 1 >= itemCount) {
+						nextItem = ItemRenderer (details.getChildAt(0));
+					} else {
+						nextItem = ItemRenderer (details.getChildAt(index + 1));
+					}
+				}
+				
+				nextItem.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+				
 			}
 			
 			[Bindable]
@@ -104,6 +148,26 @@
 				}
 			}
 			
+			private function showAddNewPopupWindow():void {
+				var addNewPopupWindow:IFlexDisplayObject = PopUpManager.createPopUp(this, NewItemPopup, false);
+				var posX: Number = (this.width - addNewPopupWindow.width) / 2;
+				var posY: Number = (this.height - addNewPopupWindow.height) / 2;
+				addNewPopupWindow.move(posX, posY);
+				addNewPopupWindow.alpha = 0.9;
+			}
+			
+			private var cursorID:Number = 0;
+			
+			private function activeDeleteButton():void {
+				if (btnDelete.pushed) {
+					cursorID = CursorManager.setCursor(deleteCursorCls);
+					CursorManager.showCursor();
+				} else {
+					CursorManager.removeCursor(cursorID);
+					CursorManager.showCursor();
+				}
+			}
+			
 		]]>
 	</mx:Script>
 
@@ -113,8 +177,8 @@
 		<mx:Image width="120" height="26" source="@Embed(source='images/notebook.gif')" />
 		<mx:ComboBox id="ceritia" width="100%" editable="true" dataProvider="{ceritias}" />
 		<mx:Button id="btnSearch" label="Search" icon="@Embed(source='icons/icon-new.gif')" />
-		<mx:Button id="btnAddNew" label="Add" icon="@Embed(source='icons/icon-new.gif')" />
-		<mx:Button id="btnDelete" label="Delete" icon="@Embed(source='icons/icon-delete.gif')" />
+		<mx:Button id="btnAddNew" label="Add" icon="@Embed(source='icons/icon-new.gif')" click="{showAddNewPopupWindow()}" />
+		<ns1:PushButton id="btnDelete" label="Delete" icon="@Embed(source='icons/icon-delete.gif')" click="{activeDeleteButton()}" />
 	</mx:HBox>
 	
 	<mx:HDividedBox width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingBottom="5">
@@ -134,7 +198,7 @@
         	<mx:Panel id="mainPanel" width="100%" height="100%" 
         		layout="vertical" 
         		backgroundColor="#FAFBFC" borderColor="#99CCFF"
-        		resize="mainPanel_OnResize()">
+        		resize="mainPanel_OnResize()" keyDown="item_OnMove(event)">
         		<mx:VBox id="details" width="100%" verticalGap="0"></mx:VBox>
         	</mx:Panel>
         </mx:Canvas>
