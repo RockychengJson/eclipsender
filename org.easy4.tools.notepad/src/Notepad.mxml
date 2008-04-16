@@ -58,7 +58,7 @@
 					var date:String = result[i].pubDate;
 					dataList.addItem({title: title,text: text, date: date});
 					var item:ItemRenderer = new ItemRenderer();
-					item._data = {title: title,text: text, date: date};
+					item.dataSource = {title: title,text: text, date: date};
 					item.addEventListener(MouseEvent.CLICK, item_OnClick);
 					details.addChild(item);
 				}
@@ -73,7 +73,17 @@
 				var item:ItemRenderer = ItemRenderer (event.currentTarget);
 				
 				if (btnDelete.pushed) {
-					details.removeChild(item);
+					if (item.isDeleted()) {
+						pnlTrash.removeChild(item);
+						return;
+					}
+					item.pushToTrash();
+					//item.removeEventListener(MouseEvent.CLICK, item_OnClick);
+					pnlTrash.addChild(item);
+					return;
+				}
+				
+				if (item.isDeleted()) {
 					return;
 				}
 				
@@ -82,7 +92,7 @@
 				}
 				item.showDetail(true);
 				item.setFocus();
-				mainPanel.title = item._data.title;
+				mainPanel.title = item.dataSource.title;
 				if (lastShownItem != null) {
 					lastShownItem.showDetail(false);
 				}
@@ -183,18 +193,18 @@
 	
 	<mx:HDividedBox width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingBottom="5">
 	
-		<mx:Canvas label="Left Panel" width="20%" height="100%">
+		<mx:Canvas label="Left Panel" width="30%" height="100%">
 			<mx:VBox width="100%" height="100%">
-				<mx:Panel width="100%" height="200" layout="vertical" title="Books" borderColor="#99CCFF">
+				<mx:Panel width="100%" height="200" layout="vertical" id="pnlBooks" title="Books" borderColor="#99CCFF" verticalGap="0">
 				</mx:Panel>
-				<mx:Panel width="100%" height="100%" layout="vertical" title="Tags" borderColor="#B5EDBC">
+				<mx:Panel width="100%" height="100%" layout="vertical" id="pnlTags" title="Tags" borderColor="#B5EDBC" verticalGap="0">
 				</mx:Panel>
-				<mx:Panel width="100%" height="100%" layout="vertical" title="Trash" borderColor="#6093C6">
+				<mx:Panel width="100%" height="200" layout="vertical" id="pnlTrash" title="Trash" borderColor="#6093C6" verticalGap="0">
 				</mx:Panel>
 			</mx:VBox>
         </mx:Canvas>
         
-        <mx:Canvas label="Right Panel" width="80%" height="100%">
+        <mx:Canvas label="Right Panel" width="70%" height="100%">
         	<mx:Panel id="mainPanel" width="100%" height="100%" 
         		layout="vertical" 
         		backgroundColor="#FAFBFC" borderColor="#99CCFF"
