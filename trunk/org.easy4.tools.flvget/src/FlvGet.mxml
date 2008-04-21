@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="vertical" backgroundColor="#EEF3F6" 
+	width="400" height="600"
+	paddingTop="4" paddingBottom="2" paddingLeft="4" paddingRight="4">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.ResultEvent;
+			
+			private function getFeed():void {
+				hs.addEventListener(ResultEvent.RESULT, onResult);
+				hs.send();
+			}
+			
+			private function onResult(event:ResultEvent):void {
+				var rsXML:XML = XML(event.result);
+				taskArray.addItem({
+					name: rsXML.child("name"),
+					file: rsXML.child("name") + ".flv",
+					url: rsXML.child("url")
+				});
+			}
+
+		]]>
+	</mx:Script>
+	
+	<mx:HTTPService id="hs" url="http://localhost:8080/FlvGetService/FlvGet" resultFormat="e4x" showBusyCursor="true">
+		<mx:request xmlns="">
+			<url>{srcPage.text}</url>
+		</mx:request>
+	</mx:HTTPService>
+	
+	<mx:ArrayCollection id="taskArray">
+		<mx:Object name="Montgomery" file="Montgomery.flv" url="http://www.a.com/Montgomery.flv"/>
+		<mx:Object name="Juneau" file="Juneau.flv" url="http://www.a.com/Juneau.flv" />
+		<mx:Object name="Little Rock" file="Little Rock.flv" url="http://www.a.com/Little Rock.flv" />
+	</mx:ArrayCollection>
+	
+	<mx:HBox width="100%" height="30">
+		<mx:Image source="@Embed(source='images/logo.gif')" />
+	</mx:HBox>
+	
+	<mx:VBox width="100%" cornerRadius="4" borderStyle="solid" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+		<mx:Label text="复制视频所在页面的地址，输入到下方并点击下载。 " fontWeight="bold" fontSize="12"/>
+		<mx:HBox width="100%">
+			<mx:TextInput id="srcPage" width="100%" text="在这里粘贴视频页面的地址..." focusIn="{srcPage.text=''}" />
+			<mx:Button label="下载" click="{getFeed()}"/>
+		</mx:HBox>
+	</mx:VBox>
+	
+	<mx:DataGrid id="dg1" dataProvider="{taskArray}" width="100%" height="60" />
+	
+	<mx:VideoDisplay id="videoDisplay" width="100%" height="300" source="{dg1.selectedItem.url}" />
+	
+</mx:WindowedApplication>
