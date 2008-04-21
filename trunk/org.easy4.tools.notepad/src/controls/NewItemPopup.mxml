@@ -10,6 +10,7 @@
 	borderAlpha="2" borderColor="#92B3E8" cornerRadius="5" backgroundAlpha="0.9" 
 	titleIcon="@Embed(source='icons/icon-new.gif')"
 	title="Add new note ..." alpha="1.0"
+	showEffect="{dissolveIn}" hideEffect="{dissolveOut}" creationCompleteEffect="{dissolveIn}" removedEffect="{dissolveOut}"
 	close="removeMe();">
 
 	<mx:Script>
@@ -27,6 +28,9 @@
             }
         ]]>
     </mx:Script>
+    
+    <mx:Dissolve id="dissolveOut" duration="1000" alphaFrom="1.0" alphaTo="0.0"/>
+    <mx:Dissolve id="dissolveIn" duration="1000" alphaFrom="0.0" alphaTo="1.0"/>
     
 	<mx:Form width="100%">
 		<mx:FormItem label="Title" width="100%" required="true">
