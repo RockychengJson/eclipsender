@@ -6,6 +6,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import db.DataBase;
 			import controls.ItemRenderer;
 			import controls.NewItemPopup;
 			import mx.containers.Canvas;
@@ -30,6 +31,7 @@
             	mainPanel.title = "Loading...";
             	details.height = mainPanel.height - 40;
             	this.statusBar.visible = false;
+            	db.DataBase.getInstance();
         	}
         	
         	private function mainPanel_OnResize():void {
@@ -69,6 +71,13 @@
 			
 			private var lastShownItem:ItemRenderer;
 			
+			private function moveItem():void {
+                itemMove.end();
+				itemMove.xTo = pnlTrash.x + 10;
+				itemMove.yTo = pnlTrash.y + 10; 
+            	itemMove.play();
+            }
+			
 			private function item_OnClick(event:MouseEvent):void {
 				var item:ItemRenderer = ItemRenderer (event.currentTarget);
 				
@@ -79,6 +88,8 @@
 					}
 					item.pushToTrash();
 					//item.removeEventListener(MouseEvent.CLICK, item_OnClick);
+					itemMove.target = item;
+					moveItem();
 					pnlTrash.addChild(item);
 					return;
 				}
@@ -182,6 +193,8 @@
 	</mx:Script>
 
 	<mx:HTTPService id="feed" url="http://localhost/feeds/news.rss" result="makeDataList()" />
+	
+	<mx:Move id="itemMove" duration="1000" />
 	
 	<mx:HBox width="100%" height="40" verticalAlign="middle" paddingLeft="10" paddingRight="20">
 		<mx:Image width="120" height="26" source="@Embed(source='images/notebook.gif')" />
