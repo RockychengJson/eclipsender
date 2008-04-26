@@ -26,17 +26,13 @@
 		]]>
 	</mx:Script>
 	
-	<mx:HTTPService id="hs" url="http://localhost:8080/FlvGetService/FlvGet" resultFormat="e4x" showBusyCursor="true">
+	<mx:HTTPService id="hs" url="http://www.myjavaserver.com/~fxfboy/index.jsp" resultFormat="e4x" showBusyCursor="true">
 		<mx:request xmlns="">
 			<url>{srcPage.text}</url>
 		</mx:request>
 	</mx:HTTPService>
 	
-	<mx:ArrayCollection id="taskArray">
-		<mx:Object name="Montgomery" file="Montgomery.flv" url="http://www.a.com/Montgomery.flv"/>
-		<mx:Object name="Juneau" file="Juneau.flv" url="http://www.a.com/Juneau.flv" />
-		<mx:Object name="Little Rock" file="Little Rock.flv" url="http://www.a.com/Little Rock.flv" />
-	</mx:ArrayCollection>
+	<mx:ArrayCollection id="taskArray" />
 	
 	<mx:HBox width="100%" height="30">
 		<mx:Image source="@Embed(source='images/logo.gif')" />
@@ -46,11 +42,17 @@
 		<mx:Label text="复制视频所在页面的地址，输入到下方并点击下载。 " fontWeight="bold" fontSize="12"/>
 		<mx:HBox width="100%">
 			<mx:TextInput id="srcPage" width="100%" text="在这里粘贴视频页面的地址..." focusIn="{srcPage.text=''}" />
-			<mx:Button label="下载" click="{getFeed()}"/>
+			<mx:Button label="分析" click="{getFeed()}"/>
 		</mx:HBox>
 	</mx:VBox>
 	
-	<mx:DataGrid id="dg1" dataProvider="{taskArray}" width="100%" height="60" />
+	<mx:DataGrid id="dg1" dataProvider="{taskArray}" width="100%" height="100%">
+		<mx:columns>
+			<mx:DataGridColumn headerText="名称" dataField="name" />
+			<mx:DataGridColumn headerText="文件" dataField="file" />
+			<mx:DataGridColumn headerText="地址" dataField="url" />
+		</mx:columns>
+	</mx:DataGrid>
 	
 	<mx:VideoDisplay id="videoDisplay" width="100%" height="300" source="{dg1.selectedItem.url}" />
 	
