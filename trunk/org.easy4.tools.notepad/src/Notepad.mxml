@@ -6,7 +6,7 @@
 
 	<mx:Script>
 		<![CDATA[
-			import db.DataBase;
+			//import db.DataBase;
 			import controls.ItemRenderer;
 			import controls.NewItemPopup;
 			import mx.containers.Canvas;
@@ -31,7 +31,7 @@
             	mainPanel.title = "Loading...";
             	details.height = mainPanel.height - 40;
             	this.statusBar.visible = false;
-            	db.DataBase.getInstance();
+            	//db.DataBase.getInstance();
         	}
         	
         	private function mainPanel_OnResize():void {
