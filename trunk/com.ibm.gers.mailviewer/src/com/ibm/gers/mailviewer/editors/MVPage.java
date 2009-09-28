@@ -1,12 +1,9 @@
 package com.ibm.gers.mailviewer.editors;
 
-import java.applet.AppletContext;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -36,6 +33,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.forms.HyperlinkSettings;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -78,7 +76,6 @@ public class MVPage extends FormPage {
 		page_ = this;
 	}
 
-	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
@@ -110,7 +107,7 @@ public class MVPage extends FormPage {
 		layout.numColumns = 2;
 		sectionMailClient.setLayout(layout);
 		
-		Color labelColor = toolkit.getColors().getColor(FormColors.TITLE);
+		Color labelColor = toolkit.getColors().getColor(IFormColors.TITLE);
 		
 		// Create controls on the Mail Section
 		// TO
@@ -302,7 +299,7 @@ public class MVPage extends FormPage {
 		buttonSaveAs.setEnabled(true);
 	}
 	
-	private void showError(String msg){
+	public void showError(String msg){
 		Exception e = new Exception(msg);
 		showError(e);
 	}
