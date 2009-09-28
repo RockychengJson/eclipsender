@@ -1,0 +1,290 @@
+<position-config>
+    <key name="ROLES">
+        <key name="*"> <!-- userid -->
+            <key name="ROLES" pos="0" value="ROL_LIST">
+                <key name="*"> <!-- form -->
+                    <key pos="0" value="ROL_ROLES" />
+                    <key pos="1" value="ROL_EXPROC_ORGS" />
+                    <key pos="2" value="ROL_POSTAUD_ORGS" />
+                </key>
+            </key>
+        </key>
+    </key>
+    <key name="SERVER">
+        <key pos="0" value="SVR_NAME" />
+        <key pos="1" value="SVR_PORT" />
+        <key pos="2" value="SVR_ADMPORT" />
+        <key pos="3" value="SVR_HOME" />
+        <key pos="4" value="SVR_LOG_BACKUPS" />
+        <key pos="5" value="SVR_LOG_BUFCOUNT" />
+        <key pos="6" value="SVR_SECURITY_CLASS" />
+        <key pos="7" value="SVR_EMP_COUNT" />
+        <key pos="8" value="SVR_ADMIN_EMAIL" />
+        <key pos="9" value="SVR_PASSWORD_EMAIL" />
+        <key pos="10" value="SVR_ROLEMANAGER_CLASS" />
+        <key pos="11" value="SVR_LEVEL" />
+        <key pos="12" value="SVR_FOLDER_STORE" />
+        <key pos="13" value="SVR_RPT_EXPIRE_MONTHS" />
+        <key pos="14" value="SVR_FL_MAX_HISTORY" />
+    </key>
+    <key name="SERVICES">
+        <key name="DBS">
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+             </key>
+             <key name="DEFS">
+                 <key name="*"> <!-- DB Name -->
+                     <key pos="0" value="DBS_LABEL" />
+                     <key pos="1" value="DBS_JDBC_DRIVER" />
+                     <key pos="2" value="DBS_URL" />
+                     <key pos="3" value="DBS_USERID" />
+                     <key pos="4" value="DBS_PASSWORD" />
+                     <key pos="5" value="DBS_INIT_CONN" />
+                     <key pos="6" value="DBS_MAX_IDLE_CONN" />
+                     <key pos="7" value="DBS_DESCRIPTION" />
+                 </key>
+             </key>
+             <key name="ATTRS">
+                 <key pos="0" value="DBM_ENCRYPT_KEY" />
+             </key>
+        </key>
+        <key name="WRK">
+            <key name="ATTRS">
+                <key name="" pos="0" value="WRK_APPROVERS">
+                    <key name="">
+                        <key pos="0" value="WRK_APPR_USERID" />
+                        <key pos="1" value="WRK_APPR_TYPE" />
+                        <key pos="2" value="WRK_APPR_RULETBL" />
+                        <key pos="3" value="WRK_APPR_INTERVAL" />
+                        <key pos="4" value="WRK_APPR_DESCRIPTION" />
+                        <key pos="5" value="WRK_APPR_CLASS" />
+                    </key>
+                </key>
+            </key>
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+            <key name="DEFS">
+                <key name="">
+                    <key pos="0" value="WRD_FORM_TYPE" />
+                    <key pos="1" value="WRD_FORM_DAYS" />
+                    <key pos="2" value="WRD_FORM_COMPDAYS" />
+                    <key pos="3" value="WRD_DB_NAME" />
+                    <key pos="4" value="WRD_DESCRIPTION" />
+                    <key pos="5" value="WRD_SUBMIT_APPR" />
+                    <key pos="6" value="WRD_FINAL_APPR" />
+                    <key pos="7" value="WRD_APPR_DBCLASS" />
+                </key>
+            </key>
+        </key>
+        <key name="PRC">
+            <key name="ATTRS">
+                <key pos="0" value="PRC_PROCLET_THREADS" />
+                <key pos="1" value="PRC_SESSION_TIMEOUT" />
+                <key pos="2" value="PRC_CLIENT_TIMEOUT" />
+            </key>
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+            <key name="DEFS">
+               <key name="*"> <!-- PRC or "" -->
+                   <key pos="0" value="PRD_LABEL" />
+                   <key pos="1" value="PRD_CLASS" />
+                   <key pos="2" value="PRD_AUTH_LEVEL" />
+                   <key pos="3" value="PRD_DESCRIPTION" />
+                   <key pos="4" value="PRD_DEBUG" />
+                   <key name="" pos="5" value="PRD_PARMS">
+                       <key name="">
+                           <key pos="0" value="0" />
+                           <key pos="1" value="1" />
+                       </key>
+                   </key>
+               </key>
+            </key>
+        </key>
+        <key name="MAI">
+            <key name="ATTRS">
+                <key pos="0" value="MAI_FORMAT_CLASS" />
+                <key pos="1" value="MAI_EXT_PATH" />
+                <key pos="2" value="MAI_BATCH_SIZE" />
+                <key pos="3" value="MAI_SMTP_SERVER" />
+                <key pos="4" value="MAI_SMTP_PORT" />
+                <key pos="5" value="MAI_FOOTER1" />
+                <key pos="6" value="MAI_FOOTER2" />
+                <key pos="7" value="MAI_INTERVAL" />
+                <key pos="8" value="MAI_FROM_EMAILADDR" />
+            </key>
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+        </key>
+        <key name="PRO">
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+        </key>
+        <key name="REC">
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+        </key>
+        <key name="TBL">
+            <key name="ATTRS">
+                <key name="" pos="0" value="TBL_LIST">
+                    <key name="">
+                        <key pos="0" value="TBL_LIST_NAME" />
+                        <key pos="1" value="TBL_LIST_DESCRIPTION" />
+                        <key name="" pos="3" value="TBL_LIST_TABLES">
+                            <key name="" />
+                        </key>
+                    </key>
+                </key>
+            </key>
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+            <key name="DEFS">
+                <key name="*">  <!-- Table Name -->
+                    <key pos="0" value="TBD_LABEL" />
+                    <key pos="1" value="TBD_KEY_OFFSET" />
+                    <key pos="2" value="TBD_KEY_LENGTH" />
+                    <key pos="3" value="TBD_SERVER_CACHE" />
+                    <key pos="4" value="TBD_FILENAME" />
+                    <key pos="5" value="TBD_EXT_PATH" />
+                    <key pos="6" value="TBD_DESCRIPTION" />
+                    <key pos="7" value="TBD_MAINTENANCE" />
+                    <key pos="8" value="TBD_CLASS" />
+                    <key pos="9" value="TBD_KEY_PADCHAR" />
+                    <key pos="10" value="TBD_KEY_ALIGN" />
+                    <key pos="11" value="TBD_EXIT_NAME" />
+                    <key pos="12" value="TBD_EXIT_PARMS" />
+                </key>
+            </key>
+        </key>
+        <key name="EVT">
+            <key name="ATTRS">
+                <key name="HOLIDAYS">
+                    <key name="">
+                        <key pos="0" value="0" />
+                    </key>
+                </key>
+            </key>
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+            <key name="DEFS">
+                <key name="">
+                    <key pos="0" value="EVD_LABEL" />
+                    <key pos="1" value="EVD_TYPE" />
+                    <key pos="2" value="EVD_ENABLED_IND" />
+                    <key pos="3" value="EVD_RUNMISS_IND" />
+                    <key pos="4" value="EVD_LOG_RESULT" />
+                    <key pos="5" value="EVD_HOLIDAY_IND" />
+                    <key pos="6" value="EVD_SEND_EMAIL" />
+                    <key pos="7" value="EVD_EMAIL" />
+                    <key pos="8" value="EVD_FREQ" />
+                    <key pos="9" value="EVD_TIME" />
+                    <key pos="10" value="EVD_RETRY_COUNT" />
+                    <key pos="11" value="EVD_RETRY_WAIT" />
+                    <key pos="12" value="EVD_CLASS_NAME" />
+                    <key name="" pos="13" value="EVD_CLASS_PARMS">
+                        <key name="*"> <!-- Parm Name -->
+                            <key pos="0" value="0"/>
+                            <key pos="1" value="1"/>
+                        </key>
+                    </key>
+                    <key pos="14" value="EVD_START_TIME" />
+                    <key pos="15" value="EVD_END_TIME" />
+                    <key pos="16" value="EVD_DEBUG" />
+                    <key pos="17" value="EVD_CONFIRM_IND" />
+                    <key pos="18" value="EVD_ONETIME_DATE" />
+                    <key pos="19" value="EVD_TASKID" />
+                    <key pos="20" value="EVD_LAST_TS" />
+                    <key pos="21" value="EVD_PRE_TASKID" />
+                    <key pos="22" value="EVD_MAX_HISTORY" />
+                </key>
+            </key>
+        </key>
+        <key name="DIR">
+            <key name="ATTRS">
+                <key pos="0" value="DIR_TYPE" />
+                <key pos="1" value="DIR_LDAP_SERVER" />
+                <key pos="2" value="DIR_LDAP_PORT" />
+                <key pos="3" value="DIR_MAX_ATTEMPTS" />
+                <key pos="4" value="DIR_EXPIRE_DAYS" />
+                <key name="" pos="5" value="DIR_ATTRS">
+                    <key name="">
+                        <key pos="0" value="DIR_ATTRS_NAME" />
+                        <key pos="1" value="DIR_ATTRS_LENGTH" />
+                        <key pos="2" value="DIR_ATTRS_KEY_TEXT" />
+                    </key>
+                </key>
+                <key pos="6" value="DIR_CLASS" />
+                <key pos="7" value="DIR_CACHE_SIZE" />
+                <key pos="8" value="DIR_MINPASS_LENGTH" />
+            </key>
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+            </key>
+        </key>
+        <key name="IMG">
+            <key name="DEFAULT">
+                <key pos="0" value="DEF_SERVNAME" />
+                <key pos="1" value="DEF_CLASS" />
+                <key pos="2" value="DEF_PRIORITY" />
+                <key pos="3" value="DEF_ENABLED" />
+                <key pos="4" value="DEF_DEBUG" />
+                <key pos="5" value="DEF_SERVCODE" />
+             </key>
+        </key>
+    </key>
+    <key name="IMAGE">
+        <key pos="0" value="REMOTE_IMAGE_DNS" />
+        <key pos="1" value="REMOTE_IMAGE_PORT" />
+    </key>
+</position-config>
