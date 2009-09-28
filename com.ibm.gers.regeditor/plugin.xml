@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="ERS RegEditor"
+            extensions="reg"
+            icon="icons/diamondblue.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="com.ibm.gers.regeditor.editors.RegEditor"
+            id="com.ibm.gers.regeditor.editors.RegEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.ibm.gers.regeditor.preferences.ConverterPreferencePage"
+            id="com.ibm.gers.ersconverter.preferences.ConverterPreferencePage"
+            name="ERS RegEditor">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.ibm.gers.regeditor.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
