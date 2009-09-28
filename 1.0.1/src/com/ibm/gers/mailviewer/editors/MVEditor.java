@@ -11,7 +11,6 @@ import org.eclipse.ui.ide.FileStoreEditorInput;
 
 import com.ibm.gers.mailviewer.Mail;
 
-import exs.serv.WCMailAttachment;
 import exs.serv.WCMailException;
 
 /**
@@ -20,7 +19,7 @@ import exs.serv.WCMailException;
 public class MVEditor extends FormEditor implements IResourceChangeListener{
 
 	/**
-	 * Creates a multi-page editor example.
+	 * Create an editor.
 	 */
 	public MVEditor() {
 		super();
@@ -46,10 +45,6 @@ public class MVEditor extends FormEditor implements IResourceChangeListener{
 		
 		try {
 			mail.fromDisk(file);
-			mail.addAttachment(new WCMailAttachment("Instraction.doc", "Instraction.doc".getBytes()));
-			mail.addAttachment(new WCMailAttachment("Monthly Report.xls", "Monthly Report.xls".getBytes()));
-			mail.addAttachment(new WCMailAttachment("Readme.txt", "Readme.txt".getBytes()));
-
 		} catch (WCMailException e) {
 			throw new PartInitException("Invalid Input: " + e.getMessage());
 		}

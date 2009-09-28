@@ -169,7 +169,7 @@ public class MVPage extends FormPage {
 		rtextContent.addHyperlinkListener(new HyperlinkAdapter() {
 			public void linkActivated(HyperlinkEvent e) {
 				String href = e.getHref().toString().toLowerCase();
-				//java.awt.Desktop.getDesktop().browse(URI.create(href));
+				//java.awt.Desktop.getDesktop().browse(URI.create(href));// Since Java 1.6
 				Program program = Program.findProgram(".html");
 				program.execute(href);
 				}
