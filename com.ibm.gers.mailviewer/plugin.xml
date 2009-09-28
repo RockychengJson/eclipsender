@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="MailViewer"
+            extensions="nte"
+            icon="icons/mail_16.png"
+            class="com.ibm.gers.mailviewer.editors.MVEditor"
+            id="com.ibm.gers.mailviewer.editors.MVEditor">
+      </editor>
+   </extension>
+
+</plugin>
