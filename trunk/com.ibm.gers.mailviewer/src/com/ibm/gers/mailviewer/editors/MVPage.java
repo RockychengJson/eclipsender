@@ -38,9 +38,8 @@ import org.eclipse.ui.forms.widgets.ColumnLayout;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.forms.widgets.ScrolledFormText;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.forms.widgets.TableWrapData;
-import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 import com.ibm.gers.mailviewer.Activator;
 import com.ibm.gers.mailviewer.Mail;
@@ -144,39 +143,45 @@ public class MVPage extends FormPage {
 		labelContent.setForeground(labelColor);
 		labelContent.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
 		
-		Composite contentPanel = toolkit.createComposite(sectionMailClient);
-		contentPanel.setLayoutData(new GridData(GridData.FILL_BOTH));
+		Text textContent = toolkit.createText(sectionMailClient, mail_.getBody(), SWT.V_SCROLL | SWT.WRAP);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.widthHint = 400;
+		gd.heightHint = 200;
+		gd.minimumWidth = 400;
+		gd.minimumHeight = 200;
+		textContent.setLayoutData(gd);
+		textContent.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		
-		TableWrapLayout contentLayout = new TableWrapLayout();
-		contentLayout.numColumns = 1;
-		contentPanel.setLayout(contentLayout);
+//		ScrolledFormText textContent = new ScrolledFormText(sectionMailClient, SWT.V_SCROLL | SWT.WRAP, true);
+//		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.minimumWidth = 300;
+//		gd.minimumHeight = 200;
+//		textContent.setLayoutData(gd);
+//		textContent.setBackground(textSubject.getBackground());
+//		textContent.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		
-		FormText rtextContent = toolkit.createFormText(contentPanel, true);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL);
-		td.maxWidth= 400;
-		td.maxHeight = 100;
-		rtextContent.setLayoutData(td);
-		rtextContent.setParagraphsSeparated(true);
-		
-		Display display = Activator.getDefault().getWorkbench().getDisplay();
-		FormColors formColors = new FormColors(display);
-		Color activeLinkColor = formColors.createColor("activeLink", 175,225,200);
-		HyperlinkSettings linkSettings = new HyperlinkSettings(display);
-		linkSettings.setActiveForeground(activeLinkColor);
-		linkSettings.setHyperlinkUnderlineMode(HyperlinkSettings.UNDERLINE_HOVER);
-		rtextContent.setHyperlinkSettings(linkSettings);
-		rtextContent.setText(mail_.getBody() + " http://www.google.com", false, true);
-		rtextContent.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				String href = e.getHref().toString().toLowerCase();
-				//java.awt.Desktop.getDesktop().browse(URI.create(href));
-				Program program = Program.findProgram(".html");
-				program.execute(href);
-				}
-			});
+//		FormText rtextContent = textContent.getFormText();
+//		Display display = Activator.getDefault().getWorkbench().getDisplay();
+//		FormColors formColors = new FormColors(display);
+//		Color activeLinkColor = formColors.createColor("activeLink", 175,225,200);
+//		HyperlinkSettings linkSettings = new HyperlinkSettings(display);
+//		linkSettings.setActiveForeground(activeLinkColor);
+//		linkSettings.setHyperlinkUnderlineMode(HyperlinkSettings.UNDERLINE_HOVER);
+//		rtextContent.setHyperlinkSettings(linkSettings);
+//		rtextContent.setText(mail_.getBody(), false, true);
+//		rtextContent.addHyperlinkListener(new HyperlinkAdapter() {
+//			public void linkActivated(HyperlinkEvent e) {
+//				String href = e.getHref().toString().toLowerCase();
+//				//java.awt.Desktop.getDesktop().browse(URI.create(href));
+//				Program program = Program.findProgram(".html");
+//				program.execute(href);
+//				}
+//			});
 		
         // Set the SectionClient of the Mail Section
         sectionMail.setClient(sectionMailClient);
+        
+        toolkit.paintBordersFor(sectionMailClient);
 	}
 	
 	private void createAttachmentsSection(final ScrolledForm form, FormToolkit toolkit, String title) {
