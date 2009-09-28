@@ -6,17 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.program.Program;
@@ -29,8 +24,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.forms.HyperlinkSettings;
 import org.eclipse.ui.forms.IFormColors;
@@ -215,7 +208,7 @@ public class MVPage extends FormPage {
 		TableViewer viewer = new TableViewer(tableAttachements);
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				page_.enableButtons();
+				page_.enableButtons(!event.getSelection().isEmpty());
 			}
 		});
 		viewer.setContentProvider(new AttachementsContentProvider());
@@ -230,10 +223,8 @@ public class MVPage extends FormPage {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		buttonAdd.setLayoutData(gd);
 		buttonAdd.setEnabled(false);
-		buttonAdd.addMouseListener(new MouseListener(){
-			public void mouseDoubleClick(MouseEvent event) {}
-			public void mouseDown(MouseEvent event) {}
-			public void mouseUp(MouseEvent event) {
+		buttonAdd.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
 				TableItem[] items = page_.tableAttachements.getSelection();
 				TableItem item = items.length > 0 ? items[0] : null;
 				if (item != null) {
@@ -259,10 +250,8 @@ public class MVPage extends FormPage {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		buttonSaveAs.setLayoutData(gd);
 		buttonSaveAs.setEnabled(false);
-		buttonSaveAs.addMouseListener(new MouseListener(){
-			public void mouseDoubleClick(MouseEvent arg0) {}
-			public void mouseDown(MouseEvent arg0) {}
-			public void mouseUp(MouseEvent arg0) {
+		buttonSaveAs.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
 				TableItem items[] = page_.tableAttachements.getSelection();
 				TableItem item = items.length > 0 ? items[0] : null;
 				if (item != null) {
@@ -294,9 +283,9 @@ public class MVPage extends FormPage {
 		sectionAttachements.setClient(sectionAttachementsClient);
 	}
 	
-	private void enableButtons(){
-		buttonAdd.setEnabled(true);
-		buttonSaveAs.setEnabled(true);
+	private void enableButtons(boolean enable){
+		buttonAdd.setEnabled(enable);
+		buttonSaveAs.setEnabled(enable);
 	}
 	
 	public void showError(String msg){
@@ -309,39 +298,6 @@ public class MVPage extends FormPage {
         messageBox.setText("Exception !!!");
         messageBox.setMessage(e.getMessage());
         messageBox.open();
-	}
-	
-	class AttachementsContentProvider implements IStructuredContentProvider {
-		public Object[] getElements(Object inputElement) {
-			if (inputElement instanceof MVEditorInput) {
-				MVEditorInput input = (MVEditorInput) inputElement;
-				return input.getMail().getAttachments();
-			}
-			return new Object[0];
-		}
-		public void dispose() {
-		}
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		}
-	}
-	
-	class AttachementsLabelProvider extends LabelProvider implements ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
-			if (obj instanceof WCMailAttachment) {
-				return ((WCMailAttachment)obj).getFileName();
-			}
-			return obj.toString();
-		}
-		public Image getColumnImage(Object obj, int index) {
-			if (obj instanceof WCMailAttachment) {
-				String fileName = ((WCMailAttachment)obj).getFileName();
-				if (fileName != null) {
-					return Activator.getImageByExt(Activator.getFileFix(fileName, Activator.SUFFIX));
-				}
-				return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
-			}
-			return null;
-		}
 	}
 
 }
