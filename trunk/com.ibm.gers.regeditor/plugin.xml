@@ -7,7 +7,7 @@
       <editor
             name="ERS RegEditor"
             extensions="reg"
-            icon="icons/diamondblue.png"
+            icon="icons/reg.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="com.ibm.gers.regeditor.editors.RegEditor"
             id="com.ibm.gers.regeditor.editors.RegEditor">
