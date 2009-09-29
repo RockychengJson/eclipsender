@@ -2,6 +2,7 @@ package com.ibm.gers.mailviewer;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -9,8 +10,8 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.program.Program;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -40,6 +41,11 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 	
 	/**
+	 * The bundle associated this plug-in
+	 */
+	private Bundle bundle;
+	
+	/**
 	 * The constructor
 	 */
 	public Activator() {
@@ -50,6 +56,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
+		bundle = context.getBundle();
 		super.start(context);
 		plugin = this;
 	}
@@ -90,11 +97,10 @@ public class Activator extends AbstractUIPlugin {
 		registerImage(registry, IMG_FORM_ICON32, "mail_32.png");
 	}
 	
-	private void registerImage(ImageRegistry registry, String key,
-			String fileName) {
+	private void registerImage(ImageRegistry registry, String key, String fileName) {
 		try {
-			IPath path = new Path("icons/" + fileName); //$NON-NLS-1$
-			URL url = find(path);
+			IPath path = new Path("icons/" + fileName);
+			URL url = FileLocator.find(bundle, path, null);
 			if (url!=null) {
 				ImageDescriptor desc = ImageDescriptor.createFromURL(url);
 				registry.put(key, desc);
