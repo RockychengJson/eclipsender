@@ -16,8 +16,8 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="com.ibm.gers.regeditor.preferences.ConverterPreferencePage"
-            id="com.ibm.gers.ersconverter.preferences.ConverterPreferencePage"
+            class="com.ibm.gers.regeditor.preferences.PreferencePage"
+            id="com.ibm.gers.ersconverter.preferences.PreferencePage"
             name="ERS RegEditor">
       </page>
    </extension>
