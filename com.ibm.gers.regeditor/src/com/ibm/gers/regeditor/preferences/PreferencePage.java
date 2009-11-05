@@ -20,11 +20,11 @@ import com.ibm.gers.regeditor.Activator;
  * be accessed directly via the preference store.
  */
 
-public class ConverterPreferencePage
+public class PreferencePage
 	extends FieldEditorPreferencePage
 	implements IWorkbenchPreferencePage {
 
-	public ConverterPreferencePage() {
+	public PreferencePage() {
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
 		//setDescription("The preference page of ERSConverter");
