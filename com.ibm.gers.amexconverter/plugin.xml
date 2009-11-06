@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="GERS Action Set"
+            visible="true"
+            id="com.ibm.gers.AmexConverter.actionSet">
+         <menu
+               label="GERS"
+               id="GERSMenu">
+            <separator name="GERSGroup"></separator>
+         </menu>
+         <action
+               label="&amp;Convert"
+               icon="icons/icon.gif"
+               class="com.ibm.gers.amexconverter.actions.ConvertAction"
+               tooltip="GERS Amex Converter"
+               menubarPath="GERSMenu/GERSGroup"
+               toolbarPath="GERSGroup"
+               id="com.ibm.gers.amexconverter.actions.ConvertAction">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.ibm.gers.amexconverter.preferences.PreferencePage"
+            id="com.ibm.gers.amexconverter.perperencepage"
+            name="AmexConverter">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.ibm.gers.amexconverter.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
