@@ -17,18 +17,19 @@ public class PicasaServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		resp.setContentType("application/octet-stream");
+		resp.setContentType("image");
 		
-		String img = req.getParameter("img");
+		String s = req.getParameter("s");
 		HttpURLConnection connection = null;
 		InputStream input = null;
 		OutputStream output = null;
 		
 		try {
-			if (img != null && !"".equals(img)){
+			if (!U.isEmpty(s)){
 				byte[] buffer = new byte[BUFFER_SIZE];
 				int size = 0;
-				URL url = new URL(img);
+				s = new String(Base64.decode(s));
+				URL url = new URL(U.invert(s));
 				connection = (HttpURLConnection) url.openConnection();
 				connection.connect();
 				input = new BufferedInputStream(connection.getInputStream());
