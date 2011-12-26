@@ -14,10 +14,10 @@
             <separator name="GERSGroup"></separator>
          </menu>
          <action
-               label="&amp;Convert"
+               label="&amp;Amex Convert"
                icon="icons/icon.gif"
                class="com.ibm.gers.amexconverter.actions.ConvertAction"
-               tooltip="GERS Amex Converter"
+               tooltip="Amex Converter"
                menubarPath="GERSMenu/GERSGroup"
                toolbarPath="GERSGroup"
                id="com.ibm.gers.amexconverter.actions.ConvertAction">
@@ -27,6 +27,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="com.ibm.gers.plugins.PreferencePage"
             class="com.ibm.gers.amexconverter.preferences.PreferencePage"
             id="com.ibm.gers.amexconverter.perperencepage"
             name="AmexConverter">
